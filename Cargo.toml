@@ -1,0 +1,13 @@
+[package]
+name = "hf-hub-progress-callback"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+hf-hub = { version = "0.4.1", default-features = false}
+serde = "1.0.217"
+
+[features]
+default = ["sync", "async"]
+sync = ["hf-hub/default-tls", "hf-hub/ureq"]
+async = ["hf-hub/default-tls", "hf-hub/tokio"]
