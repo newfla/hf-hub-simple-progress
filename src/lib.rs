@@ -1,11 +1,13 @@
+#![cfg_attr(feature = "async-closure", feature(async_fn_traits, unboxed_closures))]
+
 use serde::{Deserialize, Serialize};
 use std::time::{Duration, Instant};
 
 #[cfg(feature = "sync")]
 pub mod sync;
 
-#[cfg(feature = "async")]
-pub mod tokio;
+#[cfg(feature = "async-closure")]
+pub mod async_closure;
 
 /// The download progress event
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -24,6 +26,7 @@ pub struct ProgressEvent {
 }
 
 /// Store the state of a download
+#[derive(Debug, Clone)]
 struct DownloadState {
     start_time: Instant,
     len: usize,

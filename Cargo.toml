@@ -7,7 +7,10 @@ edition = "2021"
 hf-hub = { version = "0.4.1", default-features = false}
 serde = "1.0.217"
 
+[dev-dependencies]
+tokio = "1.43.0"
+
 [features]
-default = ["sync", "async"]
+default = ["sync"]
 sync = ["hf-hub/default-tls", "hf-hub/ureq"]
-async = ["hf-hub/default-tls", "hf-hub/tokio"]
+async-closure = ["hf-hub/default-tls", "hf-hub/tokio"]
