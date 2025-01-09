@@ -4,7 +4,7 @@ version = "0.1.0"
 edition = "2021"
 
 [dependencies]
-hf-hub = { version = "0.4.1", default-features = false}
+hf-hub = {git = "https://github.com/huggingface/hf-hub.git", default-features = false}
 serde = "1.0.217"
 
 [dev-dependencies]
@@ -13,4 +13,4 @@ tokio = "1.43.0"
 [features]
 default = ["sync"]
 sync = ["hf-hub/default-tls", "hf-hub/ureq"]
-async-closure = ["hf-hub/default-tls", "hf-hub/tokio"]
+async-closure = ["hf-hub/default", "hf-hub/tokio"]

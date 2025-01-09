@@ -1,10 +1,11 @@
 use crate::{DownloadState, ProgressEvent};
 use hf_hub::api::tokio::Progress;
 use std::ops::AsyncFnMut;
+use std::sync::{Arc, Mutex};
 
 #[derive(Clone)]
 struct CallbackStorage<C> {
-    download_state: Option<DownloadState>,
+    download_state: Arc<Mutex<Option<DownloadState>>>,
     callback: C,
 }
 
@@ -14,11 +15,18 @@ where
     for<'a> C::CallRefFuture<'a>: Send + Sync,
 {
     async fn init(&mut self, size: usize, filename: &str) {
-        self.download_state = Some(DownloadState::new(size, filename));
+        self.download_state = Arc::new(Mutex::new(Some(DownloadState::new(size, filename))));
     }
 
     async fn update(&mut self, size: usize) {
-        if let Some(delta) = self.download_state.as_mut().unwrap().update(size) {
+        let update = self
+            .download_state
+            .lock()
+            .unwrap()
+            .as_mut()
+            .unwrap()
+            .update(size);
+        if let Some(delta) = update {
             (self.callback)(delta).await;
         }
     }
@@ -35,7 +43,7 @@ where
     for<'a> C::CallRefFuture<'a>: Send + Sync,
 {
     CallbackStorage {
-        download_state: None,
+        download_state: Default::default(),
         callback: Box::new(callback),
     }
 }
@@ -58,8 +66,8 @@ mod tests {
                 done_copy.store(true, std::sync::atomic::Ordering::Relaxed);
             }
         });
-        api.model("julien-c/dummy-unknown".to_string())
-            .download_with_progress("config.json", callback)
+        api.model("ggerganov/whisper.cpp".to_string())
+            .download_with_progress("ggml-tiny.en-q5_1.bin", callback)
             .await
             .unwrap();
         assert!(done.load(std::sync::atomic::Ordering::Relaxed));

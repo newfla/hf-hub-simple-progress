@@ -1,5 +1,5 @@
 #![cfg_attr(feature = "async-closure", feature(async_fn_traits, unboxed_closures))]
-
+#![doc = include_str!("../README.md")]
 use serde::{Deserialize, Serialize};
 use std::time::{Duration, Instant};
 
@@ -57,7 +57,12 @@ impl DownloadState {
         let progress_100 = progress * 100.;
 
         let remaining_percentage = 100. - progress_100;
-        let duration_unit = elapsed_time / progress_100 as u32;
+        let duration_unit = elapsed_time
+            / if progress_100 as u32 == 0 {
+                1
+            } else {
+                progress_100 as u32
+            };
         let remaining_time = duration_unit * remaining_percentage as u32;
 
         let event = ProgressEvent {

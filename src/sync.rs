@@ -51,8 +51,8 @@ mod tests {
                 done_copy.store(true, std::sync::atomic::Ordering::Relaxed);
             }
         });
-        api.model("julien-c/dummy-unknown".to_string())
-            .download_with_progress("config.json", callback)
+        api.model("ggerganov/whisper.cpp".to_string())
+            .download_with_progress("ggml-tiny-q5_1.bin", callback)
             .unwrap();
         assert!(done.load(std::sync::atomic::Ordering::Relaxed));
     }
