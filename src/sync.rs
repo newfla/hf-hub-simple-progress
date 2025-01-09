@@ -1,12 +1,15 @@
 use crate::{DownloadState, ProgressEvent};
 use hf_hub::api::Progress;
 
-pub struct CallbackStorage {
+struct CallbackStorage<C> {
     download_state: Option<DownloadState>,
-    callback: Box<dyn FnMut(ProgressEvent)>,
+    callback: C,
 }
 
-impl Progress for CallbackStorage {
+impl<C> Progress for CallbackStorage<C>
+where
+    C: FnMut(ProgressEvent),
+{
     fn init(&mut self, size: usize, filename: &str) {
         self.download_state = Some(DownloadState::new(size, filename));
     }
@@ -22,12 +25,12 @@ impl Progress for CallbackStorage {
     }
 }
 
-pub fn callback_builder<C: FnMut(ProgressEvent) + 'static>(callback: C) -> impl Progress {
-    let storage = CallbackStorage {
+/// Build a [hf_hub::api::Progress] that encapsulate the provided callback
+pub fn callback_builder(callback: impl FnMut(ProgressEvent) + 'static) -> impl Progress {
+    CallbackStorage {
         download_state: None,
         callback: Box::new(callback),
-    };
-    storage
+    }
 }
 
 #[cfg(test)]
@@ -48,8 +51,8 @@ mod tests {
                 done_copy.store(true, std::sync::atomic::Ordering::Relaxed);
             }
         });
-        api.model("julien-c/dummy-unknown".to_string())
-            .download_with_progress("config.json", callback)
+        api.model("ggerganov/whisper.cpp".to_string())
+            .download_with_progress("ggml-tiny-q5_1.bin", callback)
             .unwrap();
         assert!(done.load(std::sync::atomic::Ordering::Relaxed));
     }

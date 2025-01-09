@@ -34,7 +34,7 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - uses: dtolnay/rust-toolchain@stable
-      - name: Build
+      - name: Test
         run: cargo test
 
   cargo-build-nightly:
@@ -46,7 +46,7 @@ jobs:
         with:
           toolchain: 'nightly'
       - name: Build
-        run: cargo build
+        run: cargo build --all-features
 
   cargo-test-nightly:
     runs-on: ubuntu-latest
@@ -56,5 +56,5 @@ jobs:
       - uses: dtolnay/rust-toolchain@stable
         with:
           toolchain: 'nightly'
-      - name: Build
-        run: cargo test
+      - name: Test
+        run: cargo test --all-features

@@ -1,13 +1,21 @@
 [package]
-name = "hf-hub-progress-callback"
+name = "hf-hub-simple-progress"
 version = "0.1.0"
 edition = "2021"
+authors = ["Flavio Bizzarri <fl.bizzarri@gmail.com>"]
+license = "MIT"
+description = "Simplified download callback for hf-hub"
+repository = "https://github.com/newfla/hf-hub-simple-progress"
+keywords = ["huggingface", "hf", "hub", "machine-learning"]
 
 [dependencies]
-hf-hub = { version = "0.4.1", default-features = false}
+hf-hub = {version = "0.4.1", default-features = false}
 serde = "1.0.217"
 
+[dev-dependencies]
+tokio = "1.43.0"
+
 [features]
-default = ["sync", "async"]
+default = ["sync"]
 sync = ["hf-hub/default-tls", "hf-hub/ureq"]
-async = ["hf-hub/default-tls", "hf-hub/tokio"]
+async-closure = ["hf-hub/default", "hf-hub/tokio"]
