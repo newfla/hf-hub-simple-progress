@@ -1,8 +1,8 @@
-# hf-hub-progress-callback
+# hf-hub-simple-progress
 
-WIP 
+A simpler approach to hf-hub Progress trait
 
-Based on my previous work [hf-hub#70](https://github.com/huggingface/hf-hub/pull/70/)
+Basically [hf-hub#70](https://github.com/huggingface/hf-hub/pull/70/) built on top [hf-hub#80](https://github.com/huggingface/hf-hub/pull/80/)
 
 ## Usage 
 ### Sync
@@ -10,7 +10,7 @@ Based on my previous work [hf-hub#70](https://github.com/huggingface/hf-hub/pull
 use std::{thread::sleep, time::Duration, sync::atomic::AtomicBool, rc::Rc};
 
 use hf_hub::api::sync::ApiBuilder;
-use hf_hub_progress_callback::{ProgressEvent, sync::callback_builder};
+use hf_hub_simple_progress::{ProgressEvent, sync::callback_builder};
 
 let done = Rc::new(AtomicBool::new(false));
         let done_copy = done.clone();
