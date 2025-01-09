@@ -4,7 +4,7 @@ version = "0.1.0"
 edition = "2021"
 
 [dependencies]
-hf-hub = {git = "https://github.com/huggingface/hf-hub.git", default-features = false}
+hf-hub = {version = "0.4.1", default-features = false}
 serde = "1.0.217"
 
 [dev-dependencies]
