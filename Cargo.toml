@@ -17,5 +17,5 @@ tokio = "1.43.0"
 
 [features]
 default = ["sync"]
-sync = ["hf-hub/default-tls", "hf-hub/ureq"]
-async-closure = ["hf-hub/default", "hf-hub/tokio"]
+sync = ["hf-hub/ureq"]
+async-closure = ["hf-hub/tokio"]
