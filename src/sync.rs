@@ -35,8 +35,8 @@ pub fn callback_builder(callback: impl FnMut(ProgressEvent) + 'static) -> impl P
 
 #[cfg(test)]
 mod tests {
-    use crate::sync::callback_builder;
     use crate::ProgressEvent;
+    use crate::sync::callback_builder;
     use hf_hub::api::sync::ApiBuilder;
     use std::rc::Rc;
     use std::sync::atomic::AtomicBool;
