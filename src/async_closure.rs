@@ -50,11 +50,11 @@ where
 
 #[cfg(test)]
 mod tests {
-    use crate::async_closure::callback_builder;
     use crate::ProgressEvent;
+    use crate::async_closure::callback_builder;
     use hf_hub::api::tokio::ApiBuilder;
-    use std::sync::atomic::AtomicBool;
     use std::sync::Arc;
+    use std::sync::atomic::AtomicBool;
 
     #[tokio::test]
     async fn it_works() {
