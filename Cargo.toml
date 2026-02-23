@@ -9,7 +9,7 @@ repository = "https://github.com/newfla/hf-hub-simple-progress"
 keywords = ["huggingface", "hf", "hub", "machine-learning"]
 
 [dependencies]
-hf-hub = {version = "0.4.1", default-features = false}
+hf-hub = {version = "0.5.0", default-features = false}
 serde = "1.0.217"
 
 [dev-dependencies]
